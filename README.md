@@ -1,36 +1,122 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+README: Aplicación para un Contact Center 🚀
 
-## Getting Started
+¡Bienvenido al repositorio de la Aplicación para un Contact Center! Aquí encontrarás todo lo que necesitas saber sobre este proyecto, desde cómo funciona hasta cómo sustentarlo sin morir en el intento. ¡Vamos al lío! 🎉
 
-First, run the development server:
+## ¿Qué es esto? 🤔
+Imagina que eres el héroe de un Contact Center. Tu misión: desarrollar una aplicación que muestre información en tiempo real sobre los agentes (esos seres multitarea que atienden llamadas) y los clientes (esas almas en espera que necesitan ayuda). El backend está en .NET, y tú, como frontend developer, tienes que conectar todo esto con Next.js. ¡No hay presión! 😅
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## Requerimientos 🎯
+- **Lista de Agentes:** Nombre, estado (disponible, en llamada, en pausa) y tiempo en espera.
+- **Lista de Clientes en Espera:** Nombre y tiempo de espera.
+- **Filtros:** Filtrar agentes por estado y clientes por tiempo de espera.
+- **Interacción con el Backend:** Llamadas API RESTful para obtener datos iniciales y WebSockets para actualizaciones en tiempo real.
+- **Manejo de Estado Global:** Usar hooks como `useState`, `useEffect` y `useContext`.
+- **Componentes Reutilizables:** ¡No copies y pegues código como si no hubiera un mañana!
+- **Renderizado:** Del lado del cliente y del servidor (Next.js manda aquí).
+- **WebSockets:** Para que todo se actualice en tiempo real (opcional, pero ¡qué bien queda!).
+- **Rutas con App Router:** Porque las rutas son como los caminos de la vida, hay que saber usarlas.
+
+## ¿Cómo funciona? 🛠️
+### Estructura del Proyecto 🗂️
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+├── src
+│   ├── app
+│   │   ├── agents
+│   │   │   └── page.js
+│   │   ├── clients
+│   │   │   └── page.js
+│   │   ├── error.js
+│   │   ├── globals.css
+│   │   ├── layout.js
+│   │   ├── loading.js
+│   │   ├── page.js
+│   │   └── websocket
+│   │       └── route.js
+│   ├── components
+│   │   ├── agents
+│   │   │   ├── agent-card.js
+│   │   │   ├── agent-filters.js
+│   │   │   └── agent-list.js
+│   │   ├── clients
+│   │   │   ├── client-card.js
+│   │   │   ├── client-filters.js
+│   │   │   └── client-list.js
+│   │   └── ui
+│   │       ├── alert.jsx
+│   │       ├── badge.jsx
+│   │       ├── button.jsx
+│   │       ├── card.jsx
+│   │       └── input.jsx
+│   ├── data
+│   │   ├── agents.js
+│   │   ├── clients.js
+│   │   └── constants.js
+│   ├── lib
+│   │   ├── api
+│   │   ├── context
+│   │   │   ├── agent-context.js
+│   │   │   └── client-context.js
+│   │   ├── hooks
+│   │   │   └── useWebSocket.js
+│   │   ├── utils
+│   │   │   ├── formatters.js
+│   │   │   └── websocket-service.js
+│   │   └── utils.js
+│   └── server
+│       └── websocket.js
+├── tailwind.config.js
+└── tailwind.config.mjs
 
-## Learn More
+```
 
-To learn more about Next.js, take a look at the following resources:
+### Manejo de Estado 🧠
+- **Context API:** Usamos `AgentContext` y `ClientContext` para manejar el estado global de agentes y clientes.
+- **Hooks:** `useState` para estado local, `useEffect` para efectos secundarios y `useContext` para acceder al estado global.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Actualizaciones en Tiempo Real ⚡
+- **WebSockets:** Implementamos un hook personalizado `useWebSocket` para recibir actualizaciones en tiempo real.
+- **Fetch API:** Para obtener los datos iniciales de agentes y clientes desde el backend.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Componentes Reutilizables ♻️
+- **`AgentCard` y `ClientCard`**: Tarjetas reutilizables para mostrar información.
+- **`AgentList` y `ClientList`**: Listas que renderizan las tarjetas de agentes y clientes.
+- **`AgentFilters` y `ClientFilters`**: Filtros que permiten buscar agentes por estado y clientes por tiempo de espera.
 
-## Deploy on Vercel
+### Renderizado 🎨
+- **Next.js:** Usamos SSR para mejorar el SEO y el rendimiento, y CSR para una experiencia dinámica.
+- **App Router:** Las rutas `/agents` y `/clients` permiten navegar sin recargar la aplicación.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Filtros y Query Params 🔍
+- **Filtros:** Implementados con QueryParams.
+- **Componentes de Filtros:** `AgentFilters` y `ClientFilters` manejan la lógica de filtrado.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Diferencias entre MPA y SPA 🤔
+- **MPA:** Cada página se carga desde el servidor. Bueno para SEO, pero puede ser más lento.
+- **SPA:** La aplicación se carga una vez y las actualizaciones son dinámicas.
+- **Next.js:** Combina lo mejor de ambos mundos con SSR y CSR.
+
+### Conexión con el Backend 🔗
+- **Simulación vs. Real:** Actualmente usamos datos locales simulados (`@/data/agents` y `@/data/clients`).
+- **Fetch API:** Lista para conectarse con el backend y obtener datos en tiempo real.
+
+## ¿Cómo sustentar esto? 📢
+1. **Estructura de Componentes:** Explica cómo están organizados y por qué son reutilizables.
+2. **Manejo de Estado:** Explica `useState`, `useEffect`, y `useContext`.
+3. **Actualizaciones en Tiempo Real:** Explica cómo funcionan los WebSockets.
+4. **Renderizado:** Diferencias entre SSR y CSR.
+5. **Filtros:** Explica su implementación con QueryParams.
+6. **Conexión con el Backend:** Explica la integración con la API real.
+
+## Conclusión 🏁
+Este proyecto cumple con casi todos los requisitos. Solo falta conectar con el backend real en lugar de usar datos simulados. ¡Pero eso es pan comido para ti! 🍞
+
+## ¿Qué sigue? 🚀
+1. **Conectar con el Backend:** Reemplaza los datos locales con llamadas reales a la API RESTful.
+2. **Enviar el Correo:** No olvides enviar el correo con el asunto "PRUEBA FINALIZADA" antes del 24 de febrero a las 8:00 AM.
+3. **Sustentar con Confianza:** Usa esta guía para explicar todo con claridad y humor. ¡Tú puedes! 💪
+
+¡Y eso es todo! Ahora ve y conquista ese Contact Center. 🎉
+
