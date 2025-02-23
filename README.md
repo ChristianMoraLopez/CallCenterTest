@@ -113,10 +113,7 @@ Imagina que eres el héroe de un Contact Center. Tu misión: desarrollar una apl
 ## Conclusión 🏁
 Este proyecto cumple con casi todos los requisitos. Solo falta conectar con el backend real en lugar de usar datos simulados. ¡Pero eso es pan comido para ti! 🍞
 
-## ¿Qué sigue? 🚀
-1. **Conectar con el Backend:** Reemplaza los datos locales con llamadas reales a la API RESTful.
-2. **Enviar el Correo:** No olvides enviar el correo con el asunto "PRUEBA FINALIZADA" antes del 24 de febrero a las 8:00 AM.
-3. **Sustentar con Confianza:** Usa esta guía para explicar todo con claridad y humor. ¡Tú puedes! 💪
+
 
 ¡Y eso es todo! Ahora ve y conquista ese Contact Center. 🎉
 
