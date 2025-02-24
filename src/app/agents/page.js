@@ -6,7 +6,7 @@ import { AgentList } from '@/components/agents/agent-list';
 import { AgentFilters } from '@/components/agents/agent-filters';
 import { useWebSocket } from '@/lib/hooks/useWebSocket';
 import { motion } from 'framer-motion';
-import { Sparkles, Zap, Shield, Users } from 'lucide-react';
+import {  Zap, Shield, Users } from 'lucide-react';
 
 function AgentContent() {
   const { isConnected } = useWebSocket();

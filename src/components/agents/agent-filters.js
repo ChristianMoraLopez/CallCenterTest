@@ -7,26 +7,26 @@ import { useRouter } from 'next/navigation';
 export function AgentFilters({ initialStatus }) {
   const { setStatusFilter } = useAgents();
   const router = useRouter();
-
+  
   const handleStatusChange = (status) => {
     setStatusFilter(status);
     router.push(`/agents?status=${status}`);
   };
-
+  
   return (
-    <div className="mb-6">
-      <label className="block text-sm font-medium text-gray-700 mb-2">
+    <div className="mb-6 bg-card/60 backdrop-blur-sm p-4 rounded-lg border border-primary-light/20 shadow-inner">
+      <label className="block text-sm font-medium text-primary-foreground mb-2">
         Filter by Status
       </label>
       <select
-        className="w-full md:w-64 px-3 py-2 border border-gray-300 rounded-md"
-        value={initialStatus}
+        className="w-full md:w-64 px-3 py-2 bg-background/80 border border-primary-light/30 rounded-md text-primary-foreground focus:outline-none focus:ring-2 focus:ring-primary-saturated"
+        value={initialStatus || 'all'}
         onChange={(e) => handleStatusChange(e.target.value)}
       >
         <option value="all">All Statuses</option>
-        {Object.values(AGENT_STATUSES).map(status => (
-          <option key={status} value={status}>
-            {status.replace('_', ' ')}
+        {Object.entries(AGENT_STATUSES).map(([key, value]) => (
+          <option key={value} value={value}>
+            {value.split('_').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}
           </option>
         ))}
       </select>
