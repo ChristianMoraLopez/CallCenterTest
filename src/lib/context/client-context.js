@@ -1,6 +1,6 @@
 // src/context/ClientContext.js
 import { createContext, useContext, useState, useEffect, useCallback } from 'react';
-import { fetchClients, addClient as apiAddClient, updateClientWaitTime } from '@/services/api';; 
+import { fetchClients, addClient as apiAddClient, updateClientWaitTime } from '@/services/api';
 
 const ClientContext = createContext();
 
