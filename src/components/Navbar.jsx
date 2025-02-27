@@ -24,6 +24,12 @@ export function Navbar() {
               <Button variant="ghost" className="flex items-center space-x-2 text-accent-foreground hover:bg-accent-light hover:text-accent-dark">
                 <UserPlus className="h-4 w-4" />
                 <span>Clients</span>
+                </Button>
+            </Link>
+            <Link href="/about">
+              <Button variant="ghost" className="flex items-center space-x-2 text-emerald-600 hover:bg-emerald-50 hover:text-emerald-700">
+                <Users className="h-4 w-4" />
+                <span>Acerca de mí</span>
               </Button>
             </Link>
           </div>

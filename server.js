@@ -8,19 +8,26 @@ const server = http.createServer();
 const wss = new WebSocketServer({ server });
 
 // Array de agentes (simulado)
-export let agents = [
+let agents = [
   { id: 1, name: "John Doe", status: "available", waitTime: 0, lastStatusChange: new Date().toISOString() },
   { id: 2, name: "Jane Smith", status: "on_call", waitTime: 15, lastStatusChange: new Date().toISOString() },
   { id: 3, name: "Alice Johnson", status: "available", waitTime: 0, lastStatusChange: new Date().toISOString() },
-  { id: 4, name: "Bob Brown", status: "offline", waitTime: 30, lastStatusChange: new Date().toISOString() }, // antes: "busy"
-  { id: 5, name: "Charlie Davis", status: "break", waitTime: 10, lastStatusChange: new Date().toISOString() }, // antes: "on_break"
+  { id: 4, name: "Bob Brown", status: "offline", waitTime: 30, lastStatusChange: new Date().toISOString() }, 
+  { id: 5, name: "Charlie Davis", status: "break", waitTime: 10, lastStatusChange: new Date().toISOString() }, 
   { id: 6, name: "Dana White", status: "available", waitTime: 0, lastStatusChange: new Date().toISOString() },
   { id: 7, name: "Eve Black", status: "on_call", waitTime: 20, lastStatusChange: new Date().toISOString() },
-  { id: 8, name: "Frank Green", status: "offline", waitTime: 45, lastStatusChange: new Date().toISOString() }, // antes: "busy"
-  { id: 9, name: "Grace Hall", status: "break", waitTime: 5, lastStatusChange: new Date().toISOString() }, // antes: "on_break"
+  { id: 8, name: "Frank Green", status: "offline", waitTime: 45, lastStatusChange: new Date().toISOString() }, 
+  { id: 9, name: "Grace Hall", status: "break", waitTime: 5, lastStatusChange: new Date().toISOString() }, 
   { id: 10, name: "Hank Adams", status: "available", waitTime: 0, lastStatusChange: new Date().toISOString() },
-  { id: 11, name: "Ivy Nelson", status: "offline", waitTime: 25, lastStatusChange: new Date().toISOString() }, // antes: "busy"
+  { id: 11, name: "Ivy Nelson", status: "offline", waitTime: 25, lastStatusChange: new Date().toISOString() }, 
   { id: 12, name: "Jack Wilson", status: "on_call", waitTime: 35, lastStatusChange: new Date().toISOString() },
+  { id: 13, name: "Dana White", status: "available", waitTime: 0, lastStatusChange: new Date().toISOString() },
+  { id: 14, name: "Eve Black", status: "on_call", waitTime: 20, lastStatusChange: new Date().toISOString() },
+  { id: 15, name: "Frank Green", status: "offline", waitTime: 45, lastStatusChange: new Date().toISOString() }, 
+  { id: 16, name: "Grace Hall", status: "break", waitTime: 5, lastStatusChange: new Date().toISOString() }, 
+  { id: 17, name: "Hank Adams", status: "available", waitTime: 0, lastStatusChange: new Date().toISOString() },
+  { id: 18, name: "Ivy Nelson", status: "offline", waitTime: 25, lastStatusChange: new Date().toISOString() }, 
+  { id: 19, name: "Jack Wilson", status: "on_call", waitTime: 35, lastStatusChange: new Date().toISOString() },
 ];
 
 // Array de clientes (simulado)

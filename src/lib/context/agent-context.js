@@ -30,7 +30,7 @@ export function AgentProvider({ children }) {
   return (
     <AgentContext.Provider value={{ 
       agents: filteredAgents, 
-      setAgents, // Include setAgents in the context value
+      setAgents, 
       statusFilter, 
       setStatusFilter, 
       updateAgentStatus,

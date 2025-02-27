@@ -5,7 +5,7 @@ import { formatTime, formatDate } from '@/lib/utils/formatters';
 export function AgentCard({ agent }) {
   const statusColor = STATUS_COLORS[agent.status] || 'bg-gray-500';
   
-  // Format status for display: 'on_call' -> 'On Call'
+
   const formattedStatus = agent.status
     .split('_')
     .map(word => word.charAt(0).toUpperCase() + word.slice(1))

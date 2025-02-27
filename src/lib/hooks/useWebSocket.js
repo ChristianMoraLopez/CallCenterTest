@@ -70,7 +70,7 @@ export function useWebSocket() {
         wsRef.current.close();
       }
     };
-  }, [setAgents, setClients]); // Agrega setClients como dependencia
+  }, [setAgents, setClients]);
 
   return { isConnected };
 }
