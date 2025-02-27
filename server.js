@@ -1,8 +1,15 @@
 const { WebSocketServer } = require('ws');
 const http = require('http');
+const express = require('express');
+const cors = require('cors');
 
-// Crear servidor HTTP
-const server = http.createServer();
+// Crear aplicación Express
+const app = express();
+app.use(cors());
+app.use(express.json());
+
+// Crear servidor HTTP con Express
+const server = http.createServer(app);
 
 // Crear servidor WebSocket
 const wss = new WebSocketServer({ server });
@@ -43,6 +50,80 @@ let clients = [
   { id: 9, name: "Client Nine", waitTime: 4, priority: "low", entryTime: new Date().toISOString() },
   { id: 10, name: "Client Ten", waitTime: 18, priority: "high", entryTime: new Date().toISOString() },
 ];
+
+// Rutas API RESTful
+app.get('/api/agents', (req, res) => {
+  res.json(agents);
+});
+
+app.get('/api/agents/:id', (req, res) => {
+  const agent = agents.find(a => a.id === parseInt(req.params.id));
+  if (!agent) {
+    return res.status(404).json({ message: 'Agent not found' });
+  }
+  res.json(agent);
+});
+
+app.put('/api/agents/:id', (req, res) => {
+  const agentId = parseInt(req.params.id);
+  const agentIndex = agents.findIndex(a => a.id === agentId);
+  
+  if (agentIndex === -1) {
+    return res.status(404).json({ message: 'Agent not found' });
+  }
+  
+  agents[agentIndex] = {
+    ...agents[agentIndex],
+    ...req.body,
+    lastStatusChange: new Date().toISOString()
+  };
+  
+  res.json(agents[agentIndex]);
+});
+
+app.get('/api/clients', (req, res) => {
+  res.json(clients);
+});
+
+app.get('/api/clients/:id', (req, res) => {
+  const client = clients.find(c => c.id === parseInt(req.params.id));
+  if (!client) {
+    return res.status(404).json({ message: 'Client not found' });
+  }
+  res.json(client);
+});
+
+
+// Add client endpoint
+app.post('/api/clients', (req, res) => {
+  const newClient = {
+    id: clients.length > 0 ? Math.max(...clients.map(c => c.id)) + 1 : 1,
+    name: req.body.name,
+    waitTime: req.body.waitTime || 0,
+    priority: req.body.priority || "low",
+    entryTime: new Date().toISOString(),
+  };
+  
+  clients.push(newClient);
+  res.status(201).json(newClient);
+});
+
+// Update client wait time endpoint
+app.put('/api/clients/:id', (req, res) => {
+  const clientId = parseInt(req.params.id);
+  const clientIndex = clients.findIndex(c => c.id === clientId);
+  
+  if (clientIndex === -1) {
+    return res.status(404).json({ message: 'Client not found' });
+  }
+  
+  clients[clientIndex] = {
+    ...clients[clientIndex],
+    ...req.body
+  };
+  
+  res.json(clients[clientIndex]);
+});
 
 // Función para generar nuevos clientes aleatorios
 function generateRandomClients() {
@@ -87,7 +168,7 @@ function assignClientsToAgents() {
 
 // Función para actualizar agentes
 function updateAgents() {
-  statuses = ['available', 'on_call', 'break', 'offline'];
+  const statuses = ['available', 'on_call', 'break', 'offline'];
 
   agents = agents.map(agent => ({
     ...agent,
@@ -163,5 +244,6 @@ setInterval(generateRandomClients, 5000);
 // Iniciar servidor
 const PORT = 3001;
 server.listen(PORT, () => {
+  console.log(`Servidor API ejecutándose en http://localhost:${PORT}/api`);
   console.log(`Servidor WebSocket ejecutándose en ws://localhost:${PORT}`);
 });

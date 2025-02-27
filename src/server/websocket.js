@@ -1,9 +1,11 @@
 // src/lib/hooks/useWebSocket.js
 import { useEffect, useRef, useState } from 'react';
+import { useAgents } from '../../context/AgentContext';
 
 export function useWebSocket() {
   const [isConnected, setIsConnected] = useState(false);
-  const [agents, setAgents] = useState([]);
+  const [wsAgents, setWsAgents] = useState([]);
+  const { setAgents } = useAgents(); 
   const wsRef = useRef(null);
   const reconnectTimeoutRef = useRef(null);
 
@@ -23,6 +25,9 @@ export function useWebSocket() {
           try {
             const message = JSON.parse(event.data);
             if (message.type === 'agents') {
+              // Almacenar los datos del WebSocket
+              setWsAgents(message.data);
+              // Actualizar el contexto con los datos en tiempo real (opcional)
               setAgents(message.data);
             }
           } catch (error) {
@@ -57,7 +62,10 @@ export function useWebSocket() {
         wsRef.current.close();
       }
     };
-  }, []);
+  }, [setAgents]);
 
-  return { isConnected, agents };
+  return { 
+    isConnected, 
+    wsAgents // Datos desde WebSocket, si necesitas separar la fuente
+  };
 }
